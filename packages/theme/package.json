@@ -1,0 +1,32 @@
+{
+  "name": "@mverissimo/lerna-workflow-theme",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Matheus Verissimo <mverissimoo@hotmail.com>",
+  "homepage": "https://github.com/mverissimo/lerna-workflow#readme",
+  "license": "ISC",
+  "main": "dist/lerna-workflow-theme.cjs.js",
+  "module": "dist/lerna-workflow-theme.esm.js",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mverissimo/lerna-workflow.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/mverissimo/lerna-workflow/issues"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:ci": "yarn lint --format junit -o reports/results-eslint.json",
+    "clean": "rm -rf dist"
+  }
+}

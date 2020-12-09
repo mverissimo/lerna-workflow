@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - next
+
+jobs:
+  test:
+    name: Release
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com
+          scope: "@mverissimo"
+
+      - name: Start Notification
+        uses: Brymastr/slack-action@v0.1.0
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          template: "./.github/workflows/templates/build-start.json"
+          author: ${{ github.actor	}}
+          environment: ${{ github.ref	}}
+
+      - name: Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        run: |
+          npm install -g yarn
+          yarn --pure-lockfile
+
+      - name: Lint
+        run: yarn lint:ci
+
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+            registry=https://npm.pkg.github.com/@mverissimo
+          EOF
+
+      - name: Pre-release
+        run: |
+          yarn release:next
+          lerna publish from-package --dist-tag next
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes
+        run: |
+          git config user.name {{ github.actor }}
+          git config user.email 'mverissimoo@users.noreply.github.com'
+
+          git add .
+          git commit -m "chore(publish): prerelease version bumps"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
