@@ -45,7 +45,7 @@
     "lint:ci": "lerna run lint:ci --parallel",
     "commit": "git-cz",
     "release": "",
-    "release:next": "lerna version --yes --conventional-commits --conventional-prerelease --no-git-tag-version --no-changelog --no-push"
+    "release:next": "lerna version --yes --conventional-commits --conventional-prerelease --no-git-tag-version --no-changelog --no-push --force-publish"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.12.7",

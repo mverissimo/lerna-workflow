@@ -1,4 +1,4 @@
-name: Release
+name: Pre-release
 
 on:
   push:
@@ -19,9 +19,8 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 14
           registry-url: https://npm.pkg.github.com
-          scope: "@mverissimo"
 
       - name: Yarn cache directory path
         id: yarn-cache-dir-path
@@ -54,7 +53,7 @@ jobs:
       - name: Pre-release
         run: |
           yarn release:next
-          npx lerna publish from-package --dist-tag next --force-publish
+          npx lerna publish from-package --dist-tag next
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
