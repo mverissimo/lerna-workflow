@@ -23,15 +23,6 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: "@mverissimo"
 
-      - name: Start Notification
-        uses: Brymastr/slack-action@v0.1.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        with:
-          template: "./.github/workflows/templates/build-start.json"
-          author: ${{ github.actor	}}
-          environment: ${{ github.ref	}}
-
       - name: Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -63,7 +54,7 @@ jobs:
       - name: Pre-release
         run: |
           yarn release:next
-          lerna publish from-package --dist-tag next
+          npx lerna publish from-package --dist-tag next
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
