@@ -80,10 +80,11 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
+          title: "v${{ steps.changelog.outputs.version }}"
+          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: "release/next"
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check outputs
         run: |
