@@ -49,6 +49,8 @@ jobs:
             //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
             registry=https://npm.pkg.github.com/@mverissimo
           EOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup user
         run: |
