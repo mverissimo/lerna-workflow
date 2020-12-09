@@ -50,21 +50,32 @@ jobs:
             registry=https://npm.pkg.github.com/@mverissimo
           EOF
 
-      - name: Pre-release
+      - name: Setup user
+        run: |
+          git config user.name ${{ github.actor }}
+          git config user.email ${{ github.actor }}@users.noreply.github.com'
+
+      - name: Generate CHANGELOGs and Git Tags
         run: |
           yarn release:next
-          npx lerna publish from-package --yes --dist-tag next
-
+          git add .
+          git commit -m "chore(publish): prerelease version bumps"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
+      - name: Release
         run: |
-          git config user.name {{ github.actor }}
-          git config user.email 'mverissimoo@users.noreply.github.com'
-
-          git add .
-          git commit -m "chore(publish): prerelease version bumps"
+          npx lerna publish from-package --yes --dist-tag next
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
+        with:
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: "release/next"
+          token: ${{ secrets.PAT }}
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
