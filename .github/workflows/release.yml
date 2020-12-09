@@ -53,7 +53,7 @@ jobs:
       - name: Pre-release
         run: |
           yarn release:next
-          npx lerna publish from-package --dist-tag next
+          npx lerna publish from-package --yes --dist-tag next
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
