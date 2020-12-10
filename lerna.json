@@ -7,6 +7,10 @@
     "publish": {
       "ignoreChanges": ["**/*.md"],
       "registry": "https://npm.pkg.github.com"
+    },
+    "version": {
+      "allowBranch": ["main", "next"],
+      "ignoreChanges": ["**/*.md"]
     }
   }
 }

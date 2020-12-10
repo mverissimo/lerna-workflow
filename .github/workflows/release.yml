@@ -6,9 +6,10 @@ on:
       - next
 
 jobs:
-  test:
+  release:
     name: Release
     runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
       - name: Checkout Repo
@@ -66,7 +67,7 @@ jobs:
         run: |
           yarn release:next
           git add .
-          git commit -m "chore(publish): prerelease version bumps"
+          git commit -m "chore(publish): prerelease version bumps [ci skip]"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -80,7 +81,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "v${{ steps.changelog.outputs.version }}"
+          title: "Version packages next"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           committer: GitHub <noreply@github.com>
           branch: "release/next"
