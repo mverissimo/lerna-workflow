@@ -3,13 +3,13 @@ name: Continous Integration
 on:
   push:
     branches:
+      - "**"
       - "!main"
       - "!next"
 
 jobs:
   ci:
     runs-on: ubuntu-20.04
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
       - name: Checkout Repo
