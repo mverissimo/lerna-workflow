@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+<testsuite package="org.eslint" time="0" tests="1" errors="0" name="/home/runner/work/lerna-workflow/lerna-workflow/packages/ui/src/index.ts">
+<testcase time="0" name="/home/runner/work/lerna-workflow/lerna-workflow/packages/ui/src/index.ts" classname="/home/runner/work/lerna-workflow/lerna-workflow/packages/ui/src/index" />
+</testsuite>
+</testsuites>
