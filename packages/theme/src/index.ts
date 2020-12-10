@@ -1,5 +1,5 @@
 function theme(): string {
-  return "theme";
+  return "themee";
 }
 
 export default theme;
