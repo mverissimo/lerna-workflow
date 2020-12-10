@@ -55,16 +55,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup user
-        run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Release
         run: |
-          yarn release:next
+          yarn release
           npx lerna publish from-package --yes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -76,7 +69,7 @@ jobs:
           title: "Version packages"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           committer: GitHub <noreply@github.com>
-          branch: "release/next"
+          branch: "release/stable"
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check outputs
