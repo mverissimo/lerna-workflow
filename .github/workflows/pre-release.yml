@@ -81,3 +81,18 @@ jobs:
       - name: Push changes
         run: |
           git push
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: "Version packages"
+          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          committer: GitHub <noreply@github.com>
+          branch: "release/next"
+          base: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
