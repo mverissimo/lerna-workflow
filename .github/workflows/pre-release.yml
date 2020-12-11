@@ -72,7 +72,7 @@ jobs:
 
       - name: Release
         run: |
-          yarn run lerna publish from-git --yes --dist-tag next
+          yarn run lerna publish from-package --yes --dist-tag next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
