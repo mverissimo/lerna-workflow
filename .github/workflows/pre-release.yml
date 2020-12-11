@@ -77,14 +77,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
-        run: |
-          git push
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          base: next
+          base: main
           title: "Deploy"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           committer: GitHub <noreply@github.com>
