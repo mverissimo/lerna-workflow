@@ -9,7 +9,6 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-20.04
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
       - name: Checkout Repo
@@ -85,11 +84,11 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          title: "Version packages"
+          base: next
+          title: "Deploy"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           committer: GitHub <noreply@github.com>
           branch: "release/next"
-          base: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check outputs
